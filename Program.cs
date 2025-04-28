@@ -71,6 +71,12 @@ namespace _01_High_Low_Number_Guessing
                 {
                     Console.WriteLine($"Sorry, you've used all your tries. The number was {randomNumber}.");
                 }
+                if (Math.Abs(guess - randomNumber) < 5)
+                {
+                    Console.WriteLine("You're close!");
+                }
+
+                Console.WriteLine($"You have { maxTries - tries } tries left.");
             }
         }
     }
