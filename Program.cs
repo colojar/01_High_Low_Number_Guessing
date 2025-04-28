@@ -36,14 +36,16 @@ namespace _01_High_Low_Number_Guessing
         }
         static void PlayGame()
         {
+            const int RANGE = 100;
+            const int CLOSENESS = 5
             Console.WriteLine("Welcome to the random number guesser!");
             Console.WriteLine();
-            Console.WriteLine("I will generate a number between 0 and 100, try to guess my number.");
+            Console.WriteLine($"I will generate a number between 0 and {RANGE}, try to guess my number.");
             Console.WriteLine("You only get 10 tries to guess the number.");
             Console.WriteLine("I will let you know if your guess is too high or too low.");
             Console.WriteLine();
 
-            int randomNumber = new Random().Next(0, 100);
+            int randomNumber = new Random().Next(0, RANGE);
             int guess = 0;
             int tries = 0;
             int maxTries = 10;
@@ -53,7 +55,19 @@ namespace _01_High_Low_Number_Guessing
                 Console.WriteLine();
                 Console.WriteLine($"Guess number {tries}.");
                 Console.Write("Please enter your guess: ");
-                guess = Convert.ToInt32(Console.ReadLine());
+                guess = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(guess))
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                    tries--;
+                    continue;
+                }
+                if (!int.TryParse(guess, out guess))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    tries--;
+                    continue;
+                }
                 if (guess < randomNumber)
                 {
                     Console.WriteLine("Your guess is too low.");
@@ -71,7 +85,7 @@ namespace _01_High_Low_Number_Guessing
                 {
                     Console.WriteLine($"Sorry, you've used all your tries. The number was {randomNumber}.");
                 }
-                if (Math.Abs(guess - randomNumber) < 5)
+                if (Math.Abs(guess - randomNumber) < CLOSENESS)
                 {
                     Console.WriteLine("You're close!");
                 }
